@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
+import os
 from novfn import *
 
 def autocorr(x):
@@ -128,14 +129,14 @@ def evaluate_tempos(f_novfn, f_tempofn, hop_length, tol = 0.08):
     for f in files:
         fin = open(f)
         tempos = [float(x) for x in fin.readlines()[0].split()][0:2]
-        f = "Testing/Audio/" + f.split(".txt")[0].split("/")[-1] + ".wav"
+        f = os.path.join("Testing", "Audio", f.split(".txt")[0].split(os.path.sep)[-1] + ".wav")
         sr, x = wavfile.read(f)
         novfn = f_novfn(x, hop_length, sr)
         tempo = f_tempofn(novfn, hop_length, sr)
         close = np.abs(tempo-tempos[0])/tempos[0] < tol
         close = close or np.abs(tempo-tempos[1])/tempos[1] < tol
         close_enough.append(close)
-        names.append(f.split("/")[-1])
+        names.append(f.split(os.path.sep)[-1])
         gt_tempos.append(tempos)
         est_tempos.append(tempo)
         if close:
