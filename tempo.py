@@ -46,27 +46,6 @@ def get_fourier_tempo(novfn, hop_length, sr):
     return 0
 
 
-def dft_warped(novfn):
-    """
-    Compute the DFT of an audio novelty function, 
-    resampled to coincide with the samples in the autocorrelation
-
-    Parameters
-    ----------
-    novfn: ndarray(N)
-        Novelty function on which to compute the warped DFT
-    
-    Returns
-    -------
-    ndarray(N): The warped DFT
-    """
-    dft = np.abs(np.fft.fft(novfn))
-    dftw = np.zeros_like(dft) # Warped dft to fill in
-    ## TODO: Fill this in to warp the samples of f to coincide 
-    ## with the samples of an autocorrelation function
-    return dftw
-
-
 def get_acf_dft_tempo(novfn, hop_length, sr):
     """
     Estimate the tempo, in bpm, based on a combination of a warped
